@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TB_Prjects">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Project Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Project Description" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TB_Tasks">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectID" Type="int" />
+    <Property Name="PName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="TaskName" Type="nvarchar" MaxLength="50" />
+    <Property Name="TaskDescription" Type="nvarchar(max)" />
+    <Property Name="TaskStart" Type="date" />
+    <Property Name="TaskEnd" Type="date" />
+    <Property Name="TaskDuration" Type="float" />
+    <Property Name="TaskState" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TB_Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cover" Type="image" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" />
+    <Property Name="state" Type="nvarchar" MaxLength="50" />
+    <Property Name="ComputerName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_TB_Tasks_TB_Prjects">
+    <End Role="TB_Prjects" Type="Self.TB_Prjects" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TB_Tasks" Type="Self.TB_Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_Prjects">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TB_Tasks">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBPMSModelStoreContainer">
+    <EntitySet Name="TB_Prjects" EntityType="Self.TB_Prjects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_Tasks" EntityType="Self.TB_Tasks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_Users" EntityType="Self.TB_Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TB_Tasks_TB_Prjects" Association="Self.FK_TB_Tasks_TB_Prjects">
+      <End Role="TB_Prjects" EntitySet="TB_Prjects" />
+      <End Role="TB_Tasks" EntitySet="TB_Tasks" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
